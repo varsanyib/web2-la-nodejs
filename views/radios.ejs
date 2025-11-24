@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Magyarországi FM rádióadók</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/custom_table.css" />
+</head>
+
+<body class="homepage is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="logo container">
+				<div>
+					<p>Magyarországi FM rádióadók gyűjtőoldala</p>
+				</div>
+			</div>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li class="current"><a href="/index">Kezdőlap</a></li>
+				<li><a href="/statistics">Statisztikák</a></li>
+				<% if (user) { %>
+					<li><a href="/radios">Rádióadók</a></li>
+					<li><a href="/messages">Üzenetek</a></li>
+					<li><a href="/contact">Kapcsolat</a></li>
+					<% if (user.isAdmin==1 ) { %>
+						<li><a href="/admin">Admin</a></li>
+						<% } %>
+							<li><a href="/auth/logout">Kijelentkezés</a></li>
+							<% } else { %>
+								<li><a href="/auth/login">Bejelentkezés</a></li>
+								<li><a href="/auth/register">Regisztráció</a></li>
+								<% } %>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div class="row gtr-200">
+			<div class="col-12">
+				<div class="radio-table-container">
+					<div class="radio-table-box box">
+						<h2 class="major"><span>Magyarországi FM rádióadók</span></h2>
+					<% if (user) { %>
+					<div class="mb-3 text-center">
+						<a href="/radios/create" class="btn btn-success">Rádió létrehozása</a>
+					</div>
+					<% } %>
+						<div class="table-responsive">
+							<table class="table radio-table table-bordered table-hover align-middle mb-0">
+								<thead>
+									<tr>
+										<th>Név</th>
+										<th>Település</th>
+										<th>Frekvencia</th>
+										<th>Teljesítmény</th>
+										<th>Cím</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<% radios.forEach(function(radio, i) { %>
+										<tr>
+											<td>
+												<%= radio.name %>
+											</td>
+											<td>
+												<%= radio.town_name %>
+											</td>
+											<td>
+												<%= radio.frequency %> Mhz
+											</td>
+											<td>
+												<%= radio.power %> kW
+											</td>
+											<td>
+												<a href="/radios/view/<%= radio.id %>" class="btn btn-info btn-sm">Megtekintés</a>
+												<a href="/radios/edit/<%= radio.id %>" class="btn btn-warning btn-sm">Módosítás</a>
+												<% if (user.isAdmin==1 ) { %>
+													<a href="/radios/delete/<%= radio.id %>" class="btn btn-danger btn-sm">Törlés</a>
+													<% } %>
+											</td>
+										</tr>
+										<% }) %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="container">
+				<!-- Copyright -->
+				<div id="copyright">
+					<ul class="menu">
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
