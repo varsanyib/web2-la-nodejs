@@ -1,3 +1,65 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Hiba - Magyarországi FM rádióadók</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body class="is-preload">
+  <div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header">
+      <div class="logo container">
+        <div>
+          <p>Magyarországi FM rádióadók gyűjtőoldala</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Nav -->
+    <nav id="nav">
+      <ul>
+        <li><a href="/index">Kezdőlap</a></li>
+        <li><a href="/login">Bejelentkezés</a></li>
+        <li><a href="/register">Regisztráció</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main: Hibaüzenet Box -->
+    <section id="main">
+      <div class="container">
+        <div class="row gtr-200" style="justify-content: center;">
+          <div class="col-8 col-12-medium">
+            <section class="box" style="text-align:center;">
+              <h2 class="major" style="color:#c00;">
+                <span>Hiba történt</span>
+              </h2>
+              <h1 style="margin-top:0; color:#c00;"><%= message %></h1>
+              <h2 style="margin-top:0;"><%= error.status %></h2>
+              <pre style="margin: 2em auto 0 auto; text-align:left; overflow-x:auto; background: #f5f5f5; padding:1em; border-radius:0.5em; color:#333;">
+<%= error.stack %>
+              </pre>
+              <a href="/index" class="button" style="margin-top:2em;">Vissza a kezdőlapra</a>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <div id="copyright">
+          <ul class="menu">
+            <li>&copy; Magyarországi FM rádióadók</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

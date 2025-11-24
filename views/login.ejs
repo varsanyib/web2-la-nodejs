@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Bejelentkezés - Magyarországi FM rádióadók</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+  <div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header">
+      <div class="logo container">
+        <div>
+          <p>Magyarországi FM rádióadók gyűjtőoldala</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Nav -->
+    <nav id="nav">
+      <ul>
+        <li><a href="/index">Kezdőlap</a></li>
+        <li class="current"><a href="/auth/login">Bejelentkezés</a></li>
+        <li><a href="/auth/register">Regisztráció</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <section id="main">
+      <div class="container">
+        <div class="row gtr-200" style="justify-content: center;">
+          <div class="col-6 col-12-medium">
+            <section class="box">
+              <h2 class="major"><span>Bejelentkezés</span></h2>
+              <form method="POST" action="/login">
+                <div class="row gtr-50">
+                  <div class="col-12">
+                    <input type="text" name="username" placeholder="Felhasználónév" required>
+                  </div>
+                  <div class="col-12">
+                    <input type="password" name="password" placeholder="Jelszó" required>
+                  </div>
+                  <div class="col-12">
+                    <ul class="actions special">
+                      <li><input type="submit" class="button" value="Bejelentkezés"></li>
+                    </ul>
+                  </div>
+                  <% if (typeof error !=="undefined" ) { %>
+                    <div class="col-12" style="text-align:center; color:#c00;">
+                      <%= error %>
+                    </div>
+                    <% } %>
+                </div>
+              </form>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <div class="container">
+        <div id="copyright">
+          <ul class="menu">
+            <li>&copy; Magyarországi FM rádióadók</li>
+            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
