@@ -13,86 +13,70 @@
 <body class="homepage is-preload">
 	<div id="page-wrapper">
 
-		<!-- Header -->
-		<header id="header">
-			<div class="logo container">
-				<div>
-					<p>Magyarországi FM rádióadók gyűjtőoldala</p>
+		<%- include('partials/header') %>
+
+			<!-- Main -->
+			<div class="container mt-5 mb-5">
+				<div class="row justify-content-center">
+					<div class="col-lg-9 col-md-11">
+						<div class="card shadow-sm">
+							<div class="card-body">
+								<h2 class="card-title text-center mb-4" style="color:#246;">Regisztrált felhasználók
+									(Adminisztrátori felület)</h2>
+								<div class="table-responsive">
+									<table class="table table-striped table-bordered align-middle">
+										<thead class="table-light">
+											<tr>
+												<th>#</th>
+												<th>Felhasználónév</th>
+												<th>Teljes név</th>
+												<th>Jogosultság</th>
+												<th>Létrehozva</th>
+												<th>Módosítva</th>
+											</tr>
+										</thead>
+										<tbody>
+											<% if (users.length===0) { %>
+												<tr>
+													<td colspan="6" class="text-center text-muted">Nincs felhasználó a
+														rendszerben.</td>
+												</tr>
+												<% } %>
+													<% users.forEach(function(u, i) { %>
+														<tr>
+															<td>
+																<%= u.id %>
+															</td>
+															<td>
+																<%= u.username %>
+															</td>
+															<td>
+																<%= u.name || '-' %>
+															</td>
+															<td>
+																<%= u.isAdmin ? 'adminisztrátor' : 'normál felhasználó'
+																	%>
+															</td>
+															<td>
+																<%= u.createdAt ? new
+																	Date(u.createdAt).toLocaleString('hu-HU')
+																	: 'nincs adat' %>
+															</td>
+															<td>
+																<%= u.updatedAt ? new
+																	Date(u.updatedAt).toLocaleString('hu-HU')
+																	: 'nincs adat' %>
+															</td>
+														</tr>
+														<% }); %>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</header>
-
-		<!-- Nav -->
-		<nav id="nav">
-			<ul>
-				<li class="current"><a href="/index">Kezdőlap</a></li>
-				<li><a href="/statistics">Statisztikák</a></li>
-				<li><a href="/contact">Kapcsolat</a></li>
-				<% if (user) { %>
-					<li><a href="/radios">Rádióadók</a></li>
-					<li><a href="/messages">Üzenetek</a></li>
-					<% if (user.isAdmin==1 ) { %>
-						<li><a href="/admin">Admin</a></li>
-						<% } %>
-							<li><a href="/auth/logout">Kijelentkezés</a></li>
-							<% } else { %>
-								<li><a href="/auth/login">Bejelentkezés</a></li>
-								<li><a href="/auth/register">Regisztráció</a></li>
-								<% } %>
-			</ul>
-		</nav>
-
-		<!-- Main -->
-		<div class="container mt-5 mb-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-9 col-md-11">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h2 class="card-title text-center mb-4" style="color:#246;">Regisztrált felhasználók (Adminisztrátori felület)</h2>
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered align-middle">
-              <thead class="table-light">
-                <tr>
-                  <th>#</th>
-                  <th>Felhasználónév</th>
-                  <th>Teljes név</th>
-				  <th>Jogosultság</th>
-                  <th>Létrehozva</th>
-                  <th>Módosítva</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% if (users.length === 0) { %>
-                  <tr>
-                    <td colspan="6" class="text-center text-muted">Nincs felhasználó a rendszerben.</td>
-                  </tr>
-                <% } %>
-                <% users.forEach(function(u, i) { %>
-                  <tr>
-                    <td><%= u.id %></td>
-                    <td><%= u.username %></td>
-                    <td><%= u.name || '-' %></td>
-					<td><%= u.isAdmin ? 'adminisztrátor' : 'normál felhasználó' %></td>
-                    <td>
-                      <%= u.createdAt
-                        ? new Date(u.createdAt).toLocaleString('hu-HU')
-                        : 'nincs adat' %>
-                    </td>
-                    <td>
-                      <%= u.updatedAt
-                        ? new Date(u.updatedAt).toLocaleString('hu-HU')
-                        : 'nincs adat' %>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 
@@ -100,18 +84,7 @@
 
 
 
-		<!-- Footer -->
-		<footer id="footer">
-			<div class="container">
-				<!-- Copyright -->
-				<div id="copyright">
-					<ul class="menu">
-						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</div>
-
-			</div>
-		</footer>
+			<%- include('partials/footer') %>
 
 	</div>
 

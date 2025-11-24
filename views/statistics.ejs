@@ -13,34 +13,7 @@
 <body class="homepage is-preload">
 	<div id="page-wrapper">
 
-		<!-- Header -->
-		<header id="header">
-			<div class="logo container">
-				<div>
-					<p>Magyarországi FM rádióadók gyűjtőoldala</p>
-				</div>
-			</div>
-		</header>
-
-		<!-- Nav -->
-		<nav id="nav">
-			<ul>
-				<li class="current"><a href="/index">Kezdőlap</a></li>
-				<li><a href="/statistics">Statisztikák</a></li>
-				<li><a href="/contact">Kapcsolat</a></li>
-				<% if (user) { %>
-					<li><a href="/radios">Rádióadók</a></li>
-					<li><a href="/messages">Üzenetek</a></li>
-					<% if (user.isAdmin==1 ) { %>
-						<li><a href="/admin">Admin</a></li>
-						<% } %>
-							<li><a href="/auth/logout">Kijelentkezés</a></li>
-							<% } else { %>
-								<li><a href="/auth/login">Bejelentkezés</a></li>
-								<li><a href="/auth/register">Regisztráció</a></li>
-								<% } %>
-			</ul>
-		</nav>
+		<%- include('partials/header') %>
 
 		<!-- Main -->
 		<div class="container mt-5">
@@ -100,18 +73,7 @@
 
 
 
-		<!-- Footer -->
-		<footer id="footer">
-			<div class="container">
-				<!-- Copyright -->
-				<div id="copyright">
-					<ul class="menu">
-						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</div>
-
-			</div>
-		</footer>
+		<%- include('partials/footer') %>
 
 	</div>
 

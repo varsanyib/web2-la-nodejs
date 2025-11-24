@@ -1,3 +1,8 @@
+#page-wrapper {
+    margin: auto;
+    max-width: 95%;
+}
+
 .radio-table-container {
     display: flex;
     justify-content: center;
@@ -11,7 +16,7 @@
     border-radius: 15px;
     box-shadow: 0 4px 24px rgba(35, 82, 160, 0.10);
     padding: 2.5em 2em 2em 2em;
-    width: 80vw;                   
+    width: 80vw;                  
     margin: 1em auto;
     border: 1px solid #d3e1f5;
     transition: box-shadow 0.2s;
