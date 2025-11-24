@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Nov 12. 18:24
+-- Létrehozás ideje: 2025. Nov 24. 23:48
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.0.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Adatbázis: `laravellectureproject`
+-- Adatbázis: `web2-la-nodejs`
 --
 
 -- --------------------------------------------------------
@@ -62,8 +62,6 @@ INSERT INTO `counties` (`name`, `region`, `created_at`, `updated_at`) VALUES
 
 -- --------------------------------------------------------
 
--- --------------------------------------------------------
-
 --
 -- Tábla szerkezet ehhez a táblához `messages`
 --
@@ -72,19 +70,13 @@ CREATE TABLE `messages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `body` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
--- --------------------------------------------------------
 
---
--- Tábla szerkezet ehhez a táblához `personal_access_tokens`
---
 -- --------------------------------------------------------
 
 --
@@ -98,8 +90,8 @@ CREATE TABLE `radios` (
   `power` double(8,2) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -290,7 +282,7 @@ INSERT INTO `radios` (`id`, `town_name`, `frequency`, `power`, `name`, `address`
 (181, 'Debrecen', 95.60, 0.91, 'Rádió FUN', '', NULL, NULL),
 (182, 'Nagykanizsa', 95.60, 0.13, 'Kanizsa Rádió', 'Újudvar', NULL, NULL),
 (183, 'Veszprém', 95.60, 0.10, 'MR1-Kossuth Rádió', '', NULL, NULL),
-(184, 'Balassagyarmat', 95.70, 1.00, 'Gazdasági Rádió 95.7', '', NULL, NULL),
+(184, 'Balassagyarmat', 95.70, 1.00, 'MegafonFM 95.7', '', NULL, NULL),
 (185, 'Szentes', 95.70, 0.20, 'Rádió Plusz', '', NULL, NULL),
 (186, 'Budapest', 95.80, 2.00, 'Infó Rádió', 'Széchenyi-hegy ', NULL, NULL),
 (187, 'Pécs', 95.90, 25.10, 'Neo FM', 'Misina-tető ', NULL, NULL),
@@ -503,8 +495,21 @@ INSERT INTO `radios` (`id`, `town_name`, `frequency`, `power`, `name`, `address`
 (394, 'Paks', 107.50, 1.00, 'Alisca Rádió', '', NULL, NULL),
 (395, 'Pécs', 107.60, 10.00, 'MR3-Bartók Rádió', 'Misina-tető ', NULL, NULL),
 (396, 'Budapest', 107.80, 83.20, 'MR1-Kossuth Rádió', 'Széchenyi-hegy ', NULL, NULL),
-(397, 'Sopron', 107.90, 6.90, 'MR3-Bartók Rádió', 'Dalos-hegy', NULL, NULL);
+(397, 'Sopron', 107.90, 6.90, 'MR3-Bartók Rádió', 'Dalos-hegy', NULL, NULL),
+(398, 'Balassagyarmat', 99.90, 1.00, 'Teszt rádió', '', NULL, NULL),
+(399, 'Salgótarján', 100.40, 1.50, 'Rádió 1 Salgótarján', 'Salgótarján-Zagyvapálfalva', '2025-11-24 21:26:27', NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) UNSIGNED NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 -- --------------------------------------------------------
 
 --
@@ -999,18 +1004,13 @@ INSERT INTO `towns` (`name`, `county_name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `role` varchar(255) NOT NULL DEFAULT 'user'
+  `username` varchar(255) NOT NULL,
+  `hash` varchar(255) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `modifiedAt` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- A tábla adatainak kiíratása `users`
---
 --
 -- Indexek a kiírt táblákhoz
 --
@@ -1022,22 +1022,24 @@ ALTER TABLE `counties`
   ADD PRIMARY KEY (`name`);
 
 --
---
 -- A tábla indexei `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `messages_user_id_foreign` (`user_id`);
 
-
---
---
 --
 -- A tábla indexei `radios`
 --
 ALTER TABLE `radios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `radios_town_name_foreign` (`town_name`);
+
+--
+-- A tábla indexei `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- A tábla indexei `towns`
@@ -1051,28 +1053,29 @@ ALTER TABLE `towns`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`username`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
+
 --
 -- AUTO_INCREMENT a táblához `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `radios`
 --
 ALTER TABLE `radios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=398;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=402;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Megkötések a kiírt táblákhoz
