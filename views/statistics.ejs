@@ -42,48 +42,53 @@
 			</ul>
 		</nav>
 
-		<div class="container mt-5 mb-5">
+		<!-- Main -->
+		<div class="container mt-5">
 			<div class="row justify-content-center">
-				<div class="col-lg-8 col-md-10">
-					<div class="card shadow-sm">
-						<div class="card-header bg-info text-white">
-							<h4 class="mb-0">
-								<%= radio.name %>
-							</h4>
-						</div>
+				<div class="col-lg-7 col-md-10">
+					<div class="card shadow-sm mb-4">
 						<div class="card-body">
-							<ul class="list-group list-group-flush mb-3">
-								<li class="list-group-item">
-									<span class="fw-semibold text-secondary">Lokáció:</span>
-									<%= radio.region %>, <%= radio.county_name %> megye, <%= radio.town_name %>
-								</li>
-								<li class="list-group-item">
-									<span class="fw-semibold text-secondary">Cím:</span>
-									<%= radio.address || '-' %>
-								</li>
-								<li class="list-group-item">
-									<span class="fw-semibold text-secondary">Frekvencia:</span>
-									<%= radio.frequency %> MHz
-								</li>
-								<li class="list-group-item">
-									<span class="fw-semibold text-secondary">Teljesítmény:</span>
-									<%= radio.power %> kW
-								</li>
-								<li class="list-group-item">
-									<span class="fw-semibold text-secondary">Létrehozva:</span>
-									<%= radio.created_at?.toLocaleString() ?? 'nincs adat' %>
-								</li>
-								<li class="list-group-item">
-									<span class="fw-semibold text-secondary">Frissítve:</span>
-									<%= radio.updated_at?.toLocaleString() ?? 'nincs adat' %>
-								</li>
-							</ul>
-							<div class="d-flex flex-wrap gap-2">
-								<a href="/radios" class="btn btn-secondary">Vissza a rádióadók listájához</a>
-								<a href="/radios/edit/<%= radio.id %>" class="btn btn-warning">Módosítás</a>
-								<% if (user.isAdmin==1 ) { %>
-									<a href="/radios/delete/<%= radio.id %>" class="btn btn-danger">Törlés</a>
-									<% } %>
+							<h2 class="card-title text-center mb-4" style="color:#246;">Statisztikák</h2>
+							<div class="d-flex flex-column align-items-center">
+								<div class="mb-4">
+									<span class="fw-bold text-secondary">Regisztrált rádióadók száma:</span>
+									<span class="fs-3 fw-bold ms-2 text-primary">
+										<%= count %> db
+									</span>
+								</div>
+								<div class="card border-info" style="width: 100%;">
+									<div class="card-header bg-info text-white">
+										Legutóbb hozzáadott rádióadó
+									</div>
+									<div class="card-body">
+										<% if (newest) { %>
+											<h5 class="card-title mb-3 text-primary">
+												<%= newest.name %>
+													<% if (newest.town_name) { %> — <%= newest.town_name %>
+															<% } %>
+											</h5>
+											<ul class="list-group list-group-flush text-dark mb-3">
+												<li class="list-group-item"><span class="fw-semibold">Frekvencia:</span>
+													<%= newest.frequency %> MHz
+												</li>
+												<li class="list-group-item"><span
+														class="fw-semibold">Teljesítmény:</span>
+													<%= newest.power %> kW
+												</li>
+												<li class="list-group-item"><span class="fw-semibold">Cím:</span>
+													<%= newest.address || '-' %>
+												</li>
+											</ul>
+											<div class="text-end text-muted small">
+												<span>Rögzítés dátuma: <%= newest.created_at ?
+														newest.created_at.toLocaleString?.() || newest.created_at
+														: 'N/A' %></span>
+											</div>
+											<% } else { %>
+												<p class="card-text">Még nincs rádióadó rögzítve.</p>
+												<% } %>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

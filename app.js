@@ -12,6 +12,7 @@ var registerRouter = require('./routes/register');
 var logoutRouter = require('./routes/logout');
 var adminRouter = require('./routes/admin');
 var radiosRouter = require('./routes/radios');
+var statisticsRouter = require('./routes/statistics');
 
 // Handle session
 const session = require('express-session');
@@ -51,6 +52,7 @@ app.use('/auth/register', registerRouter);
 app.use('/auth/logout', logoutRouter);
 app.use('/admin', checkAuthAdmin, adminRouter);
 app.use('/radios', checkAuth, radiosRouter);
+app.use('/statistics', statisticsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
