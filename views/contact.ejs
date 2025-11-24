@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Magyarországi FM rádióadók</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/custom_table.css" />
+</head>
+
+<body class="homepage is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="logo container">
+				<div>
+					<p>Magyarországi FM rádióadók gyűjtőoldala</p>
+				</div>
+			</div>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li class="current"><a href="/index">Kezdőlap</a></li>
+				<li><a href="/statistics">Statisztikák</a></li>
+				<% if (user) { %>
+					<li><a href="/radios">Rádióadók</a></li>
+					<li><a href="/messages">Üzenetek</a></li>
+					<li><a href="/contact">Kapcsolat</a></li>
+					<% if (user.isAdmin==1 ) { %>
+						<li><a href="/admin">Admin</a></li>
+						<% } %>
+							<li><a href="/auth/logout">Kijelentkezés</a></li>
+							<% } else { %>
+								<li><a href="/auth/login">Bejelentkezés</a></li>
+								<li><a href="/auth/register">Regisztráció</a></li>
+								<% } %>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="card shadow-sm">
+						<div class="alert alert-success text-center"><%= success ? 'Üzenet sikeresen elküldve!' : '' %></div>
+						<div class="card-body">
+							<h2 class="card-title text-center mb-4" style="color:#246;">Kapcsolatfelvételi űrlap</h2>
+							<form method="POST" action="/contact">
+								<div class="mb-3">
+									<label for="fullname" class="form-label fw-semibold">Teljes név</label>
+									<input type="text" class="form-control" id="name" name="name"
+										value="<%= user ? user.name : '' %>" <%=user ? '' : 'required' %>
+									>
+								</div>
+								<div class="mb-3">
+									<label for="subject" class="form-label fw-semibold">Tárgy</label>
+									<input type="text" class="form-control" id="subject" name="subject" required>
+								</div>
+								<div class="mb-3">
+									<label for="message" class="form-label fw-semibold">Üzenet</label>
+									<textarea class="form-control" id="message" name="message" rows="5" required
+										maxlength="1000"></textarea>
+								</div>
+								<% if (user) { %>
+									<input type="hidden" name="userId" value="<%= user.id %>">
+									<% } %>
+										<div class="text-center">
+											<button type="submit" class="btn btn-primary px-4">Üzenet küldése</button>
+										</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="container">
+				<!-- Copyright -->
+				<div id="copyright">
+					<ul class="menu">
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
