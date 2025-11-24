@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const { query } = require('../module/db');
 
+const { checkAuthAdmin } = require('../module/auth');
+
 router.get('/', async function(req, res, next) {
     // get radio stations from database
 
@@ -45,7 +47,7 @@ router.post('/edit/:id', async function(req, res, next) {
     res.redirect('/radios');
 });
 
-router.get('/delete/:id', async function(req, res, next) {
+router.get('/delete/:id', checkAuthAdmin, async function(req, res, next) {
     const radioId = req.params.id;
     await query(`DELETE FROM radios WHERE id = ${radioId}`);
     res.redirect('/radios');
