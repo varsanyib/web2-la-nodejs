@@ -10,7 +10,7 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function(req, res, next) {
     const { username, name, subject, message, userId } = req.body;
 
-    await query(`INSERT INTO messages (name, subject, body, user_id) VALUES ('${name}', '${subject}', '${message}', ${userId})`);
+    await query(`INSERT INTO messages (name, subject, body, user_id) VALUES ('${name}', '${subject}', '${message}', ${userId ?? 'NULL'})`);
     res.render('contact', { user: req.session.user || null, success: true });
 });
 

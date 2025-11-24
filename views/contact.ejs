@@ -27,10 +27,10 @@
 			<ul>
 				<li class="current"><a href="/index">Kezdőlap</a></li>
 				<li><a href="/statistics">Statisztikák</a></li>
+				<li><a href="/contact">Kapcsolat</a></li>
 				<% if (user) { %>
 					<li><a href="/radios">Rádióadók</a></li>
 					<li><a href="/messages">Üzenetek</a></li>
-					<li><a href="/contact">Kapcsolat</a></li>
 					<% if (user.isAdmin==1 ) { %>
 						<li><a href="/admin">Admin</a></li>
 						<% } %>
@@ -47,7 +47,9 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-8 col-md-10">
 					<div class="card shadow-sm">
-						<div class="alert alert-success text-center"><%= success ? 'Üzenet sikeresen elküldve!' : '' %></div>
+						<% if (success) { %>
+						<div class="alert alert-success text-center">Üzenet sikeresen elküldve!</div>
+						<% } %>
 						<div class="card-body">
 							<h2 class="card-title text-center mb-4" style="color:#246;">Kapcsolatfelvételi űrlap</h2>
 							<form method="POST" action="/contact">
